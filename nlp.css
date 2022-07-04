@@ -3,7 +3,6 @@
 
 
 
-
 .background {
   /*background-color: black;*/
   background-color: blue;
@@ -106,15 +105,24 @@ thead {
   letter-spacing: 2%;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #eee;
-}
+
 
 tbody th {
   background-color: #36c;
   color: #fff;
   text-align: left;
 }
+
+th.target{
+  background-color: red;
+  color: #fff;
+  text-align: left;
+
+}
+
+.tbody {
+        border-top: 25px solid;
+    }
 
 
 
@@ -138,4 +146,18 @@ tbody th {
 
 
 
+/* Buttons */
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
