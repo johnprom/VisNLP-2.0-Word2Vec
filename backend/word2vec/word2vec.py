@@ -187,9 +187,13 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
         print("Main Contexts: ", contexts)
         print("Main Centers: ", centers)
         if mode == 'CBOW':
-            y_pred = model(contexts)
+            res = model(contexts)
+            epoch = res[0]
+            y_pred = res[1]
+            
 
-            #currepoch = epoch
+
+            currepoch = epoch
 
             currepoch["y_pred"] = y_pred
             print("Main y_pred: ", y_pred)
@@ -197,9 +201,7 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
             loss = loss_function(y_pred, centers)
             print("Main loss: ", loss)
             currepoch["loss"] = loss
-            print("**********TESTING*********")
-            print("SKIPGRAM ", skipgram_data)
-            print("EPOCH " + str(i+1), currepoch)
+
         elif mode == 'skipgram':
             loss = model(centers, contexts)
         else:
@@ -250,6 +252,7 @@ def tsne_plot(embeddings, num, reverse_dictionary, filename):
     print("Saving plot to:", filename)
     plt.savefig(filename)
 
+
 if __name__ == "__main__":
     print("main ran")
     args = cmd_parser.parse_args()
@@ -284,6 +287,7 @@ if __name__ == "__main__":
                              clip=args.clip,
                              neg_num=args.negative_example)
     print('Training time:', timeit.default_timer() - start_time, 'Seconds')
+
     norm = torch.sqrt(torch.cumsum(torch.mul(final_embeddings, final_embeddings), 1))
     nomalized_embeddings = (final_embeddings/norm).cpu().numpy()
     # Save result and plotting

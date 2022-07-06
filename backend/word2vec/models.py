@@ -100,10 +100,13 @@ class CBOWModel(torch.nn.Module):
         dataCBOW["log_probs"] = str(log_probs)
         print("log prob shape: " + str(log_probs.shape))
         print("EPOCH ",  dataCBOW)
+        res = []
+        res.append(dataCBOW)
+        res.append(log_probs)
 
 
 
-        return log_probs
+        return res
 
 
 
