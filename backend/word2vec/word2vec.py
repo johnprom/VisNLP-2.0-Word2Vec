@@ -167,7 +167,7 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
     for param in model.parameters(): 
         p = p + 1
         print("Param: " + str(p), param.data)
-        skipgram_data["Parameter " + str(p)] = param.data
+
 
 
     optimizer = torch.optim.Adam(
@@ -181,18 +181,25 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
         print("Num_Steps: ", i)
         epoch = {}
         skipgram_data["epoch" + str(i + 1)] = epoch
+        currepoch = skipgram_data["epoch" + str(i + 1)]
         centers, contexts, data_index = generate_batch(device, data, data_index,
                                                        batch_size, num_skips, skip_window)
         print("Main Contexts: ", contexts)
         print("Main Centers: ", centers)
         if mode == 'CBOW':
             y_pred = model(contexts)
-            skipgram_data["epoch" + str(i + 1)]["y_pred"] = y_pred
+
+            #currepoch = epoch
+
+            currepoch["y_pred"] = y_pred
             print("Main y_pred: ", y_pred)
             print("Centers ", centers)
             loss = loss_function(y_pred, centers)
             print("Main loss: ", loss)
-            skipgram_data["epoch" + str(i + 1)]["loss"] = loss
+            currepoch["loss"] = loss
+            print("**********TESTING*********")
+            print("SKIPGRAM ", skipgram_data)
+            print("EPOCH " + str(i+1), currepoch)
         elif mode == 'skipgram':
             loss = model(centers, contexts)
         else:

@@ -4,7 +4,7 @@ import numpy as np
 
 TABLE_SIZE = 1e8
 
-data = {}
+dataCBOW = {}
 
 def create_sample_table(word_count):
     """ Create negative sample table for vocabulary, words with
@@ -68,35 +68,46 @@ class CBOWModel(torch.nn.Module):
         self.embeddings.weight.data.uniform_(-initrange, initrange)
         print("self.embeddings.weight.data.uniform_(-initrange, initrange): " + str(self.embeddings.weight.data.uniform_(-initrange, initrange)))
         self.linear1 = torch.nn.Linear(embedding_dim, vocabulary_size) #Linear equation, Skipgram does not have, linear transformation y = xW^T + b x -> embedding_dim in_feature, y -> vocab size out_feature
-        print("self_linear1:" + str(self.linear1)) 
+        print("self_linear1:" + str(self.linear1))
+       
 
 
     def forward(self, contexts):
+        dataCBOW = {}
         print("forward contexts: " + str(contexts))
         print("CBOW forward called")
         # input
         embeds = self.embeddings(contexts) #First it takes the context vectors as context and creates embeddings
         print("embeds context : " + str(embeds))
+
         # projection
         add_embeds = torch.sum(embeds, dim=1) #sums each row in the embeds with dimension 1
         print("add_embeds:" + str(add_embeds)) #adds right weights
         print("add_embeds shape: " + str(add_embeds.shape)) #adds right weigh
+        dataCBOW["rightWeight"] = str(add_embeds)
         # output
         print("Linear Weigth: ",self.linear1.weight)
-        print("Linear Bias: ", self.linear1.bias
-              )
+        print("Linear Bias: ", self.linear1.bias)
+
+        dataCBOW["leftWeight"] = self.linear1.weight
+        dataCBOW["leftBias"] = self.linear1.bias
         out = self.linear1(add_embeds) #adds left weight
         print("Model out: "+ str(out))
+        dataCBOW["modelOut"] = str(out)
         print("output shape: " + str(out.shape))
         log_probs = F.log_softmax(out, dim=1)
-        print("log_probs:" +str( log_probs))
+        print("log_probs:" +str(log_probs))
+        dataCBOW["log_probs"] = str(log_probs)
         print("log prob shape: " + str(log_probs.shape))
+        print("EPOCH ",  dataCBOW)
+
+
 
         return log_probs
 
 
-    def getData():
-        return data
 
     def get_embeddings(self):
         return self.embeddings.weight.data
+
+
