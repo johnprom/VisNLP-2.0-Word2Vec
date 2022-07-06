@@ -4,6 +4,8 @@ import numpy as np
 
 TABLE_SIZE = 1e8
 
+data = {}
+
 def create_sample_table(word_count):
     """ Create negative sample table for vocabulary, words with
         higher frequency will have higher occurrences in table.
@@ -91,6 +93,10 @@ class CBOWModel(torch.nn.Module):
         print("log prob shape: " + str(log_probs.shape))
 
         return log_probs
+
+
+    def getData():
+        return data
 
     def get_embeddings(self):
         return self.embeddings.weight.data

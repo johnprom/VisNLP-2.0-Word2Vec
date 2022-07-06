@@ -14,6 +14,8 @@ from inference import save_embeddings
 
 model_list = ['CBOW', 'skipgram']
 
+skipgram_data = {}
+
 cmd_parser = argparse.ArgumentParser(description=None)
 # Data arguments
 #cmd_parser.add_argument('-d', '--data', default='data/text8.zip',
@@ -159,11 +161,14 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
     print("Start training on device:", device)
     print("** Model Parameters **: ", model.get_embeddings())
 
+
     p = 0
     
     for param in model.parameters(): 
         p = p + 1
         print("Param: " + str(p), param.data)
+        skipgram_data["Parameter " + str(p)] = param.data
+
 
     optimizer = torch.optim.Adam(
         model.parameters(), lr=learning_rate)
@@ -174,6 +179,8 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
         # prepare feed data and forward pass
         print()
         print("Num_Steps: ", i)
+        epoch = {}
+        skipgram_data["epoch " + str(i + 1)] = epoch
         centers, contexts, data_index = generate_batch(device, data, data_index,
                                                        batch_size, num_skips, skip_window)
         print("Main Contexts: ", contexts)
