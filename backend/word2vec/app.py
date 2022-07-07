@@ -23,6 +23,7 @@ def users():
         #data = json.load(outfile) #reading json file, output list of dictionaries
 
         d = data_CBOW
+   
         json.dump(d, outfile, indent=4)
 
         #data.append(data_CBOW)

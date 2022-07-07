@@ -151,10 +151,40 @@ def get_deivice(disable_cuda):
 
 def clean(data):
         res = " "
+        bad_chars = [':', '_', "=", "[", "]", "(", ")","<", ">", " "]
+        bad = False
         for i in data:
-            res = res + (i.strip(string.ascii_letters))
-        return res
 
+            st =  (i.strip(string.ascii_letters))
+            if(i == "<"):
+                bad = True
+
+            if(bad == False):
+                res = res + st
+            else:
+                bad = True
+
+        
+        for s in bad_chars:
+            res = res.replace(s, '')
+
+        
+        res = res.split(',\n')
+
+        fin = []
+        for i in res:
+            arr = []
+            for value in i.split(','):
+                if(len(value) > 0):
+                    arr.append(float(value))
+
+
+                else:
+                    break
+            fin.append(arr)
+
+        print("FINNNN FOR Word ", fin)
+        return fin
 def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_size,
           num_skips, skip_window, num_steps, learning_rate, neg_num, clip):
     """Training and backpropagation process, returns final embedding as result"""
@@ -234,6 +264,8 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
         if i > 0 and i % (num_steps/100) == 0:
             print('  Average loss at step', i, ':', loss_val/(num_steps/100))
             loss_val = 0
+
+
 
     return model.get_embeddings()
 

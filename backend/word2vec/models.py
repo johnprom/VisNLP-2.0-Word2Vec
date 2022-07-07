@@ -2,6 +2,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 import string
+import re
 
 TABLE_SIZE = 1e8
 
@@ -59,9 +60,42 @@ class CBOWModel(torch.nn.Module):
 
     def clean(self, data):
         res = " "
+        bad_chars = [':', '_', "=", "[", "]", "(", ")","<", ">", " "]
+        bad = False
         for i in data:
-            res = res + (i.strip(string.ascii_letters))
-        return res
+
+            st =  (i.strip(string.ascii_letters))
+            if(i == "<"):
+                bad = True
+
+            if(bad == False):
+                res = res + st
+            else:
+                bad = True
+
+        
+        for s in bad_chars:
+            res = res.replace(s, '')
+
+        
+        res = res.split(',\n')
+
+        fin = []
+        for i in res:
+            arr = []
+            for value in i.split(','):
+                if(len(value) > 0):
+                    arr.append(float(value))
+
+
+                else:
+                    break
+            fin.append(arr)
+
+
+        print("FINNNN FOR MODEL ", fin)
+
+        return fin
 
     def __init__(self, device, vocabulary_size, embedding_dim):
         #print("device:" + device)
@@ -122,7 +156,7 @@ class CBOWModel(torch.nn.Module):
         print("log_probs:" +str(log_probs))
 
         logprobs = self.clean(str(log_probs))
-        dataCBOW["log_probs"] = str(log_probs)
+        dataCBOW["log_probs"] = str(logprobs)
 
         print("log prob shape: " + str(log_probs.shape))
         print("EPOCH ",  dataCBOW)
