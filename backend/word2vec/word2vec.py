@@ -7,10 +7,12 @@ from six.moves import xrange
 import random
 import torch
 import timeit
+import string
 from torch.autograd import Variable
 from models import SkipGramModel
 from models import CBOWModel
 from inference import save_embeddings
+
 
 model_list = ['CBOW', 'skipgram']
 
@@ -147,6 +149,12 @@ def get_deivice(disable_cuda):
         device = torch.device('cpu')
     return device
 
+def clean(data):
+        res = " "
+        for i in data:
+            res = res + (i.strip(string.ascii_letters))
+        return res
+
 def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_size,
           num_skips, skip_window, num_steps, learning_rate, neg_num, clip):
     """Training and backpropagation process, returns final embedding as result"""
@@ -195,12 +203,15 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
 
             currepoch = epoch
 
-            currepoch["y_pred"] = str(y_pred)
+            ypred = clean(str(y_pred))
+            currepoch["y_pred"] = ypred
             print("Main y_pred: ", y_pred)
             print("Centers ", centers)
             loss = loss_function(y_pred, centers)
             print("Main loss: ", loss)
-            currepoch["loss"] = str(loss)
+
+            mainloss = clean(str(loss))
+            currepoch["loss"] = mainloss
             skipgram_data["epoch" + str(i + 1)] = currepoch
 
         elif mode == 'skipgram':
