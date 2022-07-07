@@ -93,8 +93,6 @@ class CBOWModel(torch.nn.Module):
             fin.append(arr)
 
 
-        print("FINNNN FOR MODEL ", fin)
-
         return fin
 
     def __init__(self, device, vocabulary_size, embedding_dim):
@@ -128,7 +126,7 @@ class CBOWModel(torch.nn.Module):
         print("add_embeds:" + str(add_embeds)) #adds right weights
         print("add_embeds shape: " + str(add_embeds.shape)) #adds right weigh
         rightweight = self.clean(str(add_embeds))
-        dataCBOW["rightWeight"] = str(rightweight)
+        dataCBOW["rightWeight"] = rightweight
 
 
         # output
@@ -143,20 +141,20 @@ class CBOWModel(torch.nn.Module):
         weight = self.clean(str(self.linear1.weight))
         bias = self.clean(str(self.linear1.bias))
 
-        dataCBOW["leftWeight"] = str(weight)
-        dataCBOW["leftBias"] = str(bias)
+        dataCBOW["leftWeight"] = weight
+        dataCBOW["leftBias"] = bias
         out = self.linear1(add_embeds) #adds left weight
         print("Model out: "+ str(out))
 
         modelout = self.clean(str(out))
-        dataCBOW["modelOut"] = str(modelout)
+        dataCBOW["modelOut"] = modelout
 
         print("output shape: " + str(out.shape))
         log_probs = F.log_softmax(out, dim=1)
         print("log_probs:" +str(log_probs))
 
         logprobs = self.clean(str(log_probs))
-        dataCBOW["log_probs"] = str(logprobs)
+        dataCBOW["log_probs"] = logprobs
 
         print("log prob shape: " + str(log_probs.shape))
         print("EPOCH ",  dataCBOW)
