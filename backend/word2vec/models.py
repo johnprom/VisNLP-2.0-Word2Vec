@@ -89,8 +89,8 @@ class CBOWModel(torch.nn.Module):
         print("Linear Weigth: ",self.linear1.weight)
         print("Linear Bias: ", self.linear1.bias)
 
-        dataCBOW["leftWeight"] = self.linear1.weight
-        dataCBOW["leftBias"] = self.linear1.bias
+        dataCBOW["leftWeight"] = str(self.linear1.weight)
+        dataCBOW["leftBias"] = str(self.linear1.bias)
         out = self.linear1(add_embeds) #adds left weight
         print("Model out: "+ str(out))
         dataCBOW["modelOut"] = str(out)

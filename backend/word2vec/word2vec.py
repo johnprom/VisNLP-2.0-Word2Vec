@@ -195,12 +195,13 @@ def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_
 
             currepoch = epoch
 
-            currepoch["y_pred"] = y_pred
+            currepoch["y_pred"] = str(y_pred)
             print("Main y_pred: ", y_pred)
             print("Centers ", centers)
             loss = loss_function(y_pred, centers)
             print("Main loss: ", loss)
-            currepoch["loss"] = loss
+            currepoch["loss"] = str(loss)
+            skipgram_data["epoch" + str(i + 1)] = currepoch
 
         elif mode == 'skipgram':
             loss = model(centers, contexts)
@@ -252,8 +253,13 @@ def tsne_plot(embeddings, num, reverse_dictionary, filename):
     print("Saving plot to:", filename)
     plt.savefig(filename)
 
+def getData():
+    print(skipgram_data)
+    return skipgram_data
 
-if __name__ == "__main__":
+#if __name__ == "__main__"
+
+def start():
     print("main ran")
     args = cmd_parser.parse_args()
     dev = get_deivice(args.disable_cuda)
@@ -287,12 +293,13 @@ if __name__ == "__main__":
                              clip=args.clip,
                              neg_num=args.negative_example)
     print('Training time:', timeit.default_timer() - start_time, 'Seconds')
+    getData()
 
-    norm = torch.sqrt(torch.cumsum(torch.mul(final_embeddings, final_embeddings), 1))
-    nomalized_embeddings = (final_embeddings/norm).cpu().numpy()
+    #norm = torch.sqrt(torch.cumsum(torch.mul(final_embeddings, final_embeddings), 1))
+    #nomalized_embeddings = (final_embeddings/norm).cpu().numpy()
     # Save result and plotting
-    save_embeddings(args.output, final_embeddings, dictionary)
-    tsne_plot(embeddings=nomalized_embeddings,
-              num=min(vocabulary_size, args.plot_num),
-              reverse_dictionary=reverse_dictionary,
-              filename=args.plot)
+    #save_embeddings(args.output, final_embeddings, dictionary)
+    #tsne_plot(embeddings=nomalized_embeddings,
+    #          num=min(vocabulary_size, args.plot_num),
+              #reverse_dictionary=reverse_dictionary,
+              #filename=args.plot)
