@@ -18,13 +18,12 @@ def hello():
 @app.route('/matrix', methods=["GET"]) #endpoint folder /...
 def users():
 
-    myDict = {'a':'apple', 'b':'banana', 'c':'cherry'}
     print("Outputing data to Matrix JSON file")
     with open("matrix.json", "w") as outfile: #handling json file
         #data = json.load(outfile) #reading json file, output list of dictionaries
 
         d = data_CBOW
-        json.dump(d, outfile)
+        json.dump(d, outfile, indent=4)
 
         #data.append(data_CBOW)
 

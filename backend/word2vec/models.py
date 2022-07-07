@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 import numpy as np
+import string
 
 TABLE_SIZE = 1e8
 
@@ -55,6 +56,13 @@ class CBOWModel(torch.nn.Module):
     """ Context words as input, returns possiblity distribution
         prediction of center word (target).
     """
+
+    def clean(self, data):
+        res = " "
+        for i in data:
+            res = res + (i.strip(string.ascii_letters))
+        return res
+
     def __init__(self, device, vocabulary_size, embedding_dim):
         #print("device:" + device)
         print("vocabulary:" + str(vocabulary_size))
@@ -72,6 +80,7 @@ class CBOWModel(torch.nn.Module):
        
 
 
+
     def forward(self, contexts):
         dataCBOW = {}
         print("forward contexts: " + str(contexts))
@@ -84,13 +93,24 @@ class CBOWModel(torch.nn.Module):
         add_embeds = torch.sum(embeds, dim=1) #sums each row in the embeds with dimension 1
         print("add_embeds:" + str(add_embeds)) #adds right weights
         print("add_embeds shape: " + str(add_embeds.shape)) #adds right weigh
-        dataCBOW["rightWeight"] = str(add_embeds)
+        rightweight = self.clean(str(add_embeds))
+        dataCBOW["rightWeight"] = str(rightweight)
+
+
         # output
         print("Linear Weigth: ",self.linear1.weight)
         print("Linear Bias: ", self.linear1.bias)
+        #def clean(self, data):
+            #res = " "
+            #for i in data:
+                #print(int(i.strip(string.ascii_letters)))
+                #res = res + int(i.strip(string.ascii_letters))
+            #return res
+        weight = self.clean(str(self.linear1.weight))
+        bias = self.clean(str(self.linear1.bias))
 
-        dataCBOW["leftWeight"] = str(self.linear1.weight)
-        dataCBOW["leftBias"] = str(self.linear1.bias)
+        dataCBOW["leftWeight"] = str(weight)
+        dataCBOW["leftBias"] = str(bias)
         out = self.linear1(add_embeds) #adds left weight
         print("Model out: "+ str(out))
         dataCBOW["modelOut"] = str(out)
@@ -104,13 +124,17 @@ class CBOWModel(torch.nn.Module):
         res.append(dataCBOW)
         res.append(log_probs)
 
-
-
         return res
-
 
 
     def get_embeddings(self):
         return self.embeddings.weight.data
+
+    
+
+
+
+
+
 
 

@@ -257,7 +257,7 @@ def getData():
     print(skipgram_data)
     return skipgram_data
 
-#if __name__ == "__main__"
+#if __name__ == "__main__":
 
 def start():
     print("main ran")
