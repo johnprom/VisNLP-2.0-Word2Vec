@@ -133,11 +133,11 @@
       </tr>
     </table>
 </div>
-  
   <div class = "centerddiv">
+    <p> Right Weights</p>
    <table id="myData"> </table>
    
-   <p> Right Weights</p>
+   
     <script>
 
         fetch('/backend/word2vec/matrix.json')
@@ -170,6 +170,7 @@
    
 
 <div class = "centerddiv">
+  <p> Calculations</p>
    <table>
       </tbody>
       <tr>
@@ -186,13 +187,14 @@
       </tr>
     </table>
 
-    <p> Calculations</p>
+    
    
   </div>
 
  
 
   <div class = "centerddiv">
+     <p> Left Weights</p>
    <table id = "leftWeight">
     </table>
 
@@ -203,12 +205,12 @@
             .then(function (response) {
                 return response.json();
             }).then(function (data) {
-                otherData(data);
+                LeftData(data);
             })
             .catch(function (err) {
                 console.log('error: ' + err);
             });
-        function otherData(data) {
+        function LeftData(data) {
 
             var mainContainer = document.getElementById("leftWeight");
               for (var i = 0; i < data.epoch1.leftWeight.length; i++) {
@@ -229,6 +231,7 @@
 
 
   <div class = "centerddiv">
+     <p> Left Bias </p>
    <table id = "leftBias"></table>
     <script>
       fetch('/backend/word2vec/matrix.json')
@@ -259,25 +262,129 @@
   </div>
 
   <div class = "centerddiv">
-   <table>
- 
-      <tr>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>0</td>
-      </tr>
-    </table>
+     <p> Model Out</p>
+   <table  id = "modelOut"></table>
+   <script>
+      fetch('/backend/word2vec/matrix.json')
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                modelOut(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        function modelOut(data) {
+
+            var mainContainer = document.getElementById("modelOut");
+              for (var i = 0; i < data.epoch1.leftWeight.length; i++) {
+              var div = document.createElement("table");
+              let text = "<tr>"
+              for (var j = 0; j < data.epoch1.modelOut[i].length; j++) {
+              text += "<td>" + data.epoch1.modelOut[i][j] + "</td>"
+            }
+            text += "</tr>" 
+            div.innerHTML = text
+            mainContainer.appendChild(div);
+          }   
+          
+        }
+    </script>
   </div>
+
+
+ <div class = "centerddiv">
+   <p> log Probs</p>
+   <table  id = "log_probs"></table>
+   <script>
+      fetch('/backend/word2vec/matrix.json')
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                log_probs(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        function log_probs(data) {
+
+            var mainContainer = document.getElementById("log_probs");
+              for (var i = 0; i < data.epoch1.log_probs.length; i++) {
+              var div = document.createElement("table");
+              let text = "<tr>"
+              for (var j = 0; j < data.epoch1.log_probs[i].length; j++) {
+              text += "<td>" + data.epoch1.log_probs[i][j] + "</td>"
+            }
+            text += "</tr>" 
+            div.innerHTML = text
+            mainContainer.appendChild(div);
+          }   
+          
+        }
+    </script>
+  </div>
+
+   <div class = "centerddiv">
+     <p> y pred</p>
+   <table  id = "y_pred"></table>
+   <script>
+      fetch('/backend/word2vec/matrix.json')
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                y_pred(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        function y_pred(data) {
+
+            var mainContainer = document.getElementById("y_pred");
+              for (var i = 0; i < data.epoch1.y_pred.length; i++) {
+              var div = document.createElement("table");
+              let text = "<tr>"
+              for (var j = 0; j < data.epoch1.y_pred[i].length; j++) {
+              text += "<td>" + data.epoch1.y_pred[i][j] + "</td>"
+            }
+            text += "</tr>" 
+            div.innerHTML = text
+            mainContainer.appendChild(div);
+          }   
+          
+        }
+    </script>
+  </div>
+   <div class = "centerddiv">
+    <p>loss error</p>
+   <table  id = "loss"></table>
+   <script>
+      fetch('/backend/word2vec/matrix.json')
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                lossData(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        function lossData(data) {
+
+            var mainContainer = document.getElementById("loss");
+              for (var i = 0; i < data.epoch1.leftWeight.length; i++) {
+              var div = document.createElement("table");
+              let text = "<tr>"
+              for (var j = 0; j < data.epoch1.leftWeight[i].length; j++) {
+              text += "<td>" + data.epoch1.leftWeight[i][j] + "</td>"
+            }
+            text += "</tr>" 
+            div.innerHTML = text
+            mainContainer.appendChild(div);
+          }   
+          
+        }
+    </script>
+  </div>
+
 
 
 </div>
