@@ -133,32 +133,86 @@
       </tr>
     </table>
 </div>
+  
+    <body> 
+    <div class="container-1"> 
+      <script type="text/javascript" src="matrix.json"></script>
+      <table id="my_table" class="table"> 
+      </table> 
+    </div> 
+  </body> 
   <div class = "centerddiv">
-  <table>
+   <table>
       </tbody>
       <tr>
         <td>10000</td>
         <td>01000</td>
         <td>00100</td>
-        <td>00010</td>
-        <td>00001</td>
       </tr>
       <tr>
         <td>10000</td>
         <td>01000</td>
         <td>00100</td>
-        <td>00010</td>
-        <td>00001</td>
       </tr>
       <tr>
         <td>10000</td>
         <td>01000</td>
         <td>00100</td>
-        <td>00010</td>
-        <td>00001</td>
+      </tr>
+      <tr>
+        <td>10000</td>
+        <td>01000</td>
+        <td>00100</td>
+      </tr>
+      <tr>
+        <td>10000</td>
+        <td>01000</td>
+        <td>00100</td>
       </tr>
     </table>
+   
   </div>
+   <p> LOADING DATA</p>
+     <body>
+    <table id="myData"> </td>
+    </table>
+    <script>
+        fetch('/backend/word2vec/matrix.json')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                appendData(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        function appendData(data) {
+
+            var mainContainer = document.getElementById("myData");
+
+            
+              
+
+              for (var i = 0; i < data.epoch1.rightWeight.length; i++) {
+              var div = document.createElement("table");
+              let text = "<tr>"
+              for (var j = 0; j < data.epoch1.rightWeight[i].length; j++) {
+
+                
+                
+              text += "<td>" + data.epoch1.rightWeight[i][j] + "</td>"
+             
+            }
+            text += "</tr>" 
+            div.innerHTML = text
+            mainContainer.appendChild(div);
+          }
+            
+          
+        }
+    </script>
+</body>
 
 <div class = "centerddiv">
    <table>

@@ -183,7 +183,7 @@ def clean(data):
                     break
             fin.append(arr)
 
-        
+
         return fin
 def train(device, data, word_count, mode, vocabulary_size, embedding_dim, batch_size,
           num_skips, skip_window, num_steps, learning_rate, neg_num, clip):
