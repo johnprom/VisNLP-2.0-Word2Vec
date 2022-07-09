@@ -142,51 +142,13 @@
     </div> 
   </body> 
   <div class = "centerddiv">
-   <table>
-      </tbody>
-      <tr>
-        <td>10000</td>
-        <td>01000</td>
-        <td>00100</td>
-      </tr>
-      <tr>
-        <td>10000</td>
-        <td>01000</td>
-        <td>00100</td>
-      </tr>
-      <tr>
-        <td>10000</td>
-        <td>01000</td>
-        <td>00100</td>
-      </tr>
-      <tr>
-        <td>10000</td>
-        <td>01000</td>
-        <td>00100</td>
-      </tr>
-      <tr>
-        <td>10000</td>
-        <td>01000</td>
-        <td>00100</td>
-      </tr>
+   <table id="myData">
+      
     </table>
    
-  </div>
-   <p> LOADING DATA</p>
-     <body>
-    <table id="myData"> </td>
-    </table>
+   <p> Right Weights</p>
+   <script src="table.js" type="text/javascript" defer></script>
     <script>
-        fetch('/backend/word2vec/matrix.json')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                appendData(data);
-            })
-            .catch(function (err) {
-                console.log('error: ' + err);
-            });
         function appendData(data) {
 
             var mainContainer = document.getElementById("myData");
@@ -212,7 +174,8 @@
           
         }
     </script>
-</body>
+  </div>
+   
 
 <div class = "centerddiv">
    <table>
