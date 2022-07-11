@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template,request
 import flask
 import json
 import word2vec
@@ -8,9 +8,7 @@ app = Flask(__name__)
 data_CBOW = 0
 
 
-@app.route("/")
-def hello():
-    return "Hello, World!"
+
     
 
 
@@ -31,11 +29,23 @@ def users():
         #response = requests.post(url, data=data.encode())
         return flask.jsonify(d) #sending a valid response, navigate to http://localhost:6969/matrix to see response
 
+@app.route("/home")
+def home():
+   # response.headers['Access-Control-Allow-Origin'] = '*'
+    return render_template("cbowNLP.html")
+
+@app.route("/result", methods = ["POST", "GET"])
+def result():
+    output = request.form.to_dict()
+    vocabulary  = output["vocabulary"]
+
+    return render_template("cbowNLP.html", vocabulary = vocabulary)
 
 if __name__ == "__main__":
     word2vec.start()
     data_CBOW = word2vec.getData()
     app.run("localhost", 6969)
+    #app.run(debug=True)
 
 
 
