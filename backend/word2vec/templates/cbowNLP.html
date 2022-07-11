@@ -46,21 +46,8 @@
     <h3>Table</h3>
 
     <div class="container-3">
-    <table>
-      <tr>
-        <th>UNK</th>
-        <th>I</th>
-        <th class = "target">love</th>
-        <th>data</th>
-        <th>science</th>
-      </tr>
-      <tr>
-        <td>10000</td>
-        <td>01000</td>
-        <td>00100</td>
-        <td>00010</td>
-        <td>00001</td>
-      </tr>
+    <table id = "vocabs">
+
     </table>
     <div>
     <button class="next">Test CBOW</button>
@@ -69,6 +56,8 @@
   </div>
   </div>
   </div>
+
+  
 
   
 <div class="container-1">
@@ -160,6 +149,7 @@
                 log_probs(data)
                 y_pred(data)
                 lossData(data)
+                appendVocab(data);
             })
             .catch(function (err) {
                 console.log('error: ' + err);
@@ -271,6 +261,41 @@
           }   
           
         }
+
+        function appendVocab(data) {
+
+            var mainContainer = document.getElementById("vocabs");
+            
+            var div = document.createElement("table");
+            let text = "<tr>"
+            for (var i = 0; i < data.words.length; i++) {
+              text += "<th>" + data.words[i] + "</th>"
+            }
+            text += "</tr>" 
+            
+
+            text += "<tr>" 
+            let enc = ""
+            function add(enc, j){
+                for (var i = 0; i < data.words.length; i++) {
+                    if(j == i ){
+                        enc += 1
+                    }
+                    else{
+                    enc += "0"
+                }
+            }
+            return enc
+        }
+            for (var i = 0; i < data.words.length; i++) {
+              text += "<td>" + add(enc, i) + "</td>"
+            }
+        text += "</tr>" 
+
+        div.innerHTML = text
+        mainContainer.appendChild(div);
+    }
+    
     </script>
   </div>
    

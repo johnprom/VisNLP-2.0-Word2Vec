@@ -3,6 +3,7 @@ import flask
 import json
 import word2vec
 import pandas as pd
+import re
 
 app = Flask(__name__)
 data_CBOW = 0
@@ -32,6 +33,11 @@ def getoutput():
         print("Outputing data to Matrix JSON file")
         with open("matrix.json", "w") as outfile: #handling json file
             #data = json.load(outfile) #reading json file, output list of dictionaries
+
+            v = [word.lower() for word in re.compile('\w+').findall(vocabulary)]
+            v = ["UNK"] + v
+
+            data_CBOW["words"] = v
 
             d = data_CBOW
        
