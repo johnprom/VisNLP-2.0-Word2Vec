@@ -18,7 +18,8 @@ def home():
 def result():
     global vocabulary
     output = request.form.to_dict()
-    vocabulary  = output["vocabulary"] 
+    vocabulary  = output["vocabulary"]
+    
     getoutput()
 
     return render_template("cbowNLP.html", vocabulary = vocabulary)

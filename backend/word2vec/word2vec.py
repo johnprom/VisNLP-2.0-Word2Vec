@@ -63,14 +63,8 @@ cmd_parser.add_argument('-c', '--clip', default=1.0, type=float,
 cmd_parser.add_argument('-dc', '--disable_cuda', default=False, action='store_true',
                         help='Explicitly disable cuda and GPU.')
 
-def read_data(filename):
+def read_data(text):
     """Extract the first file enclosed in a zip file as a list of words."""
-    if filename.endswith('.zip'):
-        with zipfile.ZipFile(filename) as f:
-            text = f.read(f.namelist()[0]).decode('ascii')
-    else:
-        with open(filename, "r") as f:
-            text = f.read()
     return [word.lower() for word in re.compile('\w+').findall(text)]
 
 def build_dataset(words, n_words):
@@ -307,7 +301,7 @@ def start(vocabulary):
     args = cmd_parser.parse_args()
     dev = get_deivice(args.disable_cuda)
     # Data preprocessing
-    #vocabulary = read_data(args.data)
+    vocabulary = read_data(vocabulary)
     print("Vocabulary: ", vocabulary)
     print('Data size', len(vocabulary))
     data, count, dictionary, reverse_dictionary = build_dataset(vocabulary, args.size)
