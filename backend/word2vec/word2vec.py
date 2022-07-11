@@ -302,12 +302,12 @@ def getData():
 
 #if __name__ == "__main__":
 
-def start():
+def start(vocabulary):
     print("main ran")
     args = cmd_parser.parse_args()
     dev = get_deivice(args.disable_cuda)
     # Data preprocessing
-    vocabulary = read_data(args.data)
+    #vocabulary = read_data(args.data)
     print("Vocabulary: ", vocabulary)
     print('Data size', len(vocabulary))
     data, count, dictionary, reverse_dictionary = build_dataset(vocabulary, args.size)

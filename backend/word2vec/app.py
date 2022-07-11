@@ -6,6 +6,7 @@ import pandas as pd
 
 app = Flask(__name__)
 data_CBOW = 0
+vocabulary = "None"
 
 
 
@@ -13,8 +14,8 @@ data_CBOW = 0
 
 
 
-@app.route('/matrix', methods=["GET"]) #endpoint folder /...
-def users():
+
+'''def users():
 
     print("Outputing data to Matrix JSON file")
     with open("matrix.json", "w") as outfile: #handling json file
@@ -27,7 +28,7 @@ def users():
         #data.append(data_CBOW)
 
         #response = requests.post(url, data=data.encode())
-        return flask.jsonify(d) #sending a valid response, navigate to http://localhost:6969/matrix to see response
+        return flask.jsonify(d) #sending a valid response, navigate to http://localhost:6969/matrix to see response'''
 
 @app.route("/home")
 def home():
@@ -38,12 +39,33 @@ def home():
 def result():
     output = request.form.to_dict()
     vocabulary  = output["vocabulary"]
+    #should call word2vec send vocabulary
+    getoutput()
+
+
+
 
     return render_template("cbowNLP.html", vocabulary = vocabulary)
 
+@app.route('/matrix', methods=["GET"]) #endpoint folder /...
+def getoutput():
+        word2vec.start(vocabulary)
+        data_CBOW = word2vec.getData()
+        print("Outputing data to Matrix JSON file")
+        with open("matrix.json", "w") as outfile: #handling json file
+            #data = json.load(outfile) #reading json file, output list of dictionaries
+
+            d = data_CBOW
+       
+            json.dump(d, outfile, indent=4)
+
+            #data.append(data_CBOW)
+
+            #response = requests.post(url, data=data.encode())
+            return flask.jsonify(d) #sending a valid response, navigate to http://localhost:6969/matrix to see response
+
 if __name__ == "__main__":
-    word2vec.start()
-    data_CBOW = word2vec.getData()
+    
     app.run("localhost", 6969)
     #app.run(debug=True)
 
