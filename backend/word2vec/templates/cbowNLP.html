@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
+<body class = "background">
 
 
 <div class="container-1">
@@ -27,10 +27,10 @@
 
 
   <div class="box-1">
-    <div class="box-3">
+ 
     <form class = "grid" action = "/result" method = "POST" >
       <center>
-        <label id = "titlelab" for="vocabulary" class = "redTitle" > Vocabulary </label>
+        <label id = "titlelab" for="vocabulary" class = "redTitle" > Vocabulary: </label>
         <div class = vocabbox id = "placevoc"> </div>
         <input type="text" name="vocabulary" id="voc"> 
       </center>
@@ -51,27 +51,18 @@
 
       </script>
 
-      
-     
-      
       <button class = "file_submit" type="submit" >Submit </button>
       
     </form>
-  </div>
 
-
-
-    <h3>Table</h3>
-
-    <div class="container-3">
-    <table id = "vocabs">
+    
+    <table id = "vocabs" class = "tableVocab">
 
     </table>
     <div>
     <button class="next">Test CBOW</button>
     <button class="back">Back</button>
     <button class="next">Next</button></div>
-  </div>
   </div>
   </div>
 
