@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <body class = "centerddiv">
 
 
 <div class="container-1">
@@ -29,19 +28,38 @@
 
   <div class="box-1">
     <div class="box-3">
-    <form class = "grid" action = "/result" method = "POST">
+    <form class = "grid" action = "/result" method = "POST" >
+      <center>
+        <label id = "titlelab" for="vocabulary" class = "redTitle" > Vocabulary </label>
+        <div class = vocabbox id = "placevoc"> </div>
+        <input type="text" name="vocabulary" id="voc"> 
+      </center>
 
       {% if vocabulary  %}
-      <center>
-        <h3 style = "color: blue;" > Vocabulary: UNK {{vocabulary}} </h3>
-      </center>
+    
+       <body onLoad="javascript:change()" >
+
+
       {% endif %}
 
-      <label for="vocabulary"> vocabulary </label>
-      <input type="text" name="vocabulary" id="vocabulary"> 
-      <input class = "file_submit" type="submit" >
+      <script >
+        function change() // no ';' here
+      {
+        document.getElementById("placevoc").innerHTML =  "UNK {{vocabulary}}";
+     }
+  
+
+      </script>
+
+      
+     
+      
+      <button class = "file_submit" type="submit" >Submit </button>
+      
     </form>
   </div>
+
+
 
     <h3>Table</h3>
 
@@ -203,7 +221,7 @@
         function modelOut(data) {
 
             var mainContainer = document.getElementById("modelOut");
-              for (var i = 0; i < data.epoch1.leftWeight.length; i++) {
+              for (var i = 0; i < data.epoch1.modelOut.length; i++) {
               var div = document.createElement("table");
               let text = "<tr>"
               for (var j = 0; j < data.epoch1.modelOut[i].length; j++) {
@@ -370,7 +388,7 @@
 </div>
 
 
-  </body>
+
 
 </body>
 </html>

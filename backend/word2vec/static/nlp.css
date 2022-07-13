@@ -5,37 +5,43 @@
 
 .background {
   /*background-color: black;*/
-  background-color: blue;
+  background-color: black;
 }
 
-.centereddiv{
-background-color: #000;
-position: absolute;
-width: 650px;
-height: 100px;
-top: 50%;
-left: 50%;
--webkit-transform: translate(-50%, -50%);
--moz-transform: translate(-50%, -50%);
--o-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-transform: translate(-50%, -50%);
+
+.redTitle {
+  color: #A42015;
+  font-size: 30px;
+  font-family: Fira Sans;
+  float: left;
+  margin-top: 0px;
+  margin-left: 100px;
+  font-weight: bold;
+
 
 }
 
-.header {
-  padding: 80px;
-  text-align: center;
-  /*background: black;*/
-  color: blue;
-  font-family: Arial, Helvetica, sans-serif;
+.vocabbox{
+
+  padding: 10px; 
+  border: 2px solid red;
+  float: right;
+  width:  50%;
+  margin-right: 200px;
+  border-radius: 15px;
+  font-size: 26px;
+  font-family: Fira Sans;
+  color: black;
+  border-color: black;
+
 }
 
-/* Increase the font size of the h1 element */
-.h1 {
-  font-size: 40px;
-  color: blue;
-}
+
+
+
+
+
+
 
 
 @media(min-width:468px){
@@ -71,7 +77,7 @@ transform: translate(-50%, -50%);
   .container-1 div, .container-2 div, .container-3 div{
     border:1px #ccc solid;
     padding:10px;
-    color: blue;
+
     font-family: Arial, Helvetica, sans-serif;
 
   }
